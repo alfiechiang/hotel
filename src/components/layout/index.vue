@@ -2,9 +2,7 @@
     <div class="container">
         <div class="left">
 
-            <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#191A24"
-            text-color="white"
-            >
+            <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#191A24" text-color="white">
                 <el-sub-menu index="1">
                     <template #title>
                         <el-icon>
@@ -45,18 +43,45 @@
 
         </div>
         <div class="right">
-            <div class="top"></div>
+            <div class="top">
+                <div class="avatar">
+                    <img src="@/assets/avatar.jpeg" alt="">
+                    <el-dropdown>
+                        <span class="el-dropdown-link">
+                            mr.奇森
+                            <el-icon class="el-icon--right">
+                                <arrow-down />
+                            </el-icon>
+                        </span>
+                        <template #dropdown>
+                            <el-dropdown-menu>
+                                <el-dropdown-item>Action 1</el-dropdown-item>
+                                <el-dropdown-item>Action 2</el-dropdown-item>
+                                <el-dropdown-item @click="logout" >Action 3</el-dropdown-item>
+                                <el-dropdown-item disabled>Action 4</el-dropdown-item>
+                                <el-dropdown-item divided>Action 5</el-dropdown-item>
+                            </el-dropdown-menu>
+                        </template>
+                    </el-dropdown>
+                </div>
+            </div>
             <div class="content"></div>
         </div>
     </div>
 </template>
 <script setup lang="ts" >
 
+
+    const logout = ()=>{
+        alert("Logout");
+    }
+
 </script>
 <style lang="scss" scoped>
 .el-menu {
     border-right: 0;
-  }
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -71,14 +96,36 @@
     }
 
     .right {
-        width: 100vw;
+        width: 85vw;
         height: 100vh;
         overflow: hidden;
 
         .top {
-            width: 100vw;
-            height: 70px;
-            border: 0.5px solid gray;
+            width: 100%;
+            height: 60px;
+            border-bottom: 0.1px solid gray;
+            display: flex;
+            flex-direction: row-reverse;
+
+            .avatar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 150px;
+                height: 100%;
+                color: #606268;
+
+                img {
+                    margin-right: 10px;
+                    max-height: 50%;
+                    border-radius: 50%;
+
+                }
+                span{
+                    cursor: pointer;
+
+                }
+            }
         }
 
         .content {
@@ -87,6 +134,7 @@
             height: 100%;
 
         }
+       
     }
 }
 </style>
