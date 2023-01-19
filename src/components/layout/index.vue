@@ -1,43 +1,23 @@
 <template>
     <div class="container">
-        <div class="left">
+        <div class="left" :style="{background:themeColor}">
 
-            <el-menu default-active="2" class="el-menu-vertical-demo" background-color="#191A24" text-color="white">
+            <el-menu default-active="2" class="el-menu-vertical-demo" :background-color="themeColor" text-color="white">
                 <el-sub-menu index="1">
                     <template #title>
-                        <el-icon>
-                            <location />
-                        </el-icon>
-                        <span>Navigator One</span>
+                        <el-icon><Avatar /></el-icon>
+                        <span>帳戶管理</span>
                     </template>
-                    <el-menu-item-group>
-                        <template #title><span>Group One</span></template>
-                        <el-menu-item index="1-1">item one</el-menu-item>
-                        <el-menu-item index="1-2">item two</el-menu-item>
-                    </el-menu-item-group>
-                    <el-menu-item-group title="Group Two">
-                        <el-menu-item index="1-3">item three</el-menu-item>
-                    </el-menu-item-group>
-                    <el-sub-menu index="1-4">
-                        <template #title><span>item four</span></template>
-                        <el-menu-item index="1-4-1">item one</el-menu-item>
-                    </el-sub-menu>
+                    <el-menu-item index="2">
+                        <el-icon><User /></el-icon>
+                        <template #title>個人中心</template>
+                    </el-menu-item>
                 </el-sub-menu>
-                <el-menu-item index="2">
-                    <el-icon><icon-menu /></el-icon>
-                    <template #title>Navigator Two</template>
-                </el-menu-item>
                 <el-menu-item index="3" disabled>
                     <el-icon>
                         <document />
                     </el-icon>
-                    <template #title>Navigator Three</template>
-                </el-menu-item>
-                <el-menu-item index="4">
-                    <el-icon>
-                        <setting />
-                    </el-icon>
-                    <template #title>Navigator Four</template>
+                    <template #title>客房管理</template>
                 </el-menu-item>
             </el-menu>
 
@@ -56,22 +36,38 @@
                         <template #dropdown>
                             <el-dropdown-menu>
                                 <el-dropdown-item><el-icon><UserFilled /></el-icon>個人資訊</el-dropdown-item>
+                                <el-dropdown-item @click="changeThemeColor"><el-icon><Setting /></el-icon>切換主題</el-dropdown-item>
+
                                 <el-dropdown-item @click="logout" ><el-icon><Promotion /></el-icon>登出</el-dropdown-item>
                             </el-dropdown-menu>
                         </template>
                     </el-dropdown>
                 </div>
             </div>
-            <div class="content"></div>
+            <div class="content">
+                <router-view></router-view>
+            </div>
         </div>
     </div>
 </template>
 <script setup lang="ts" >
 
+import {ref} from 'vue';
+
+
+
+
+    let themeColor = ref("#191A24");
+    const changeThemeColor = () =>{
+        themeColor.value ="#223e36"
+    }
 
     const logout = ()=>{
         alert("Logout");
     }
+
+
+
 
 </script>
 <style lang="scss" scoped>
@@ -89,7 +85,6 @@
         width: 15vw;
         height: 100vh;
         padding: 10px;
-        background: #191A24;
     }
 
     .right {
@@ -129,6 +124,7 @@
             background: #EEF2F5;
             width: 100%;
             height: 100%;
+            padding: 15px;
 
         }
        
