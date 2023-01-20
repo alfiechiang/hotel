@@ -1,9 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "xx.d.ts"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "xx.d.ts", "custom-types.d.ts", "custom-types.d.ts"],
   "compilerOptions": {
     "baseUrl": ".",
     "lib": ["es2017", "dom"],
+    "suppressImplicitAnyIndexErrors": true,
     "paths": {
       "@/*": ["./src/*"]
     },
