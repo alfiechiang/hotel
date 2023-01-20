@@ -90,11 +90,11 @@ import {ref} from 'vue';
     .right {
         width: 85vw;
         height: 100vh;
-        overflow: hidden;
+        padding-bottom: 10px;
 
         .top {
             width: 100%;
-            height: 60px;
+            height: 8vh;
             border-bottom: 0.1px solid gray;
             display: flex;
             flex-direction: row-reverse;
@@ -123,8 +123,9 @@ import {ref} from 'vue';
         .content {
             background: #EEF2F5;
             width: 100%;
-            height: 100%;
-            padding: 15px;
+            height:92vh;
+            padding: 20px;
+            overflow: hidden;
 
         }
        
