@@ -27,6 +27,12 @@ const editorRef = shallowRef()
 let html =ref("")
 
 
+interface met {
+  uploadImage: {};
+}
+
+
+
 // 内容 HTML
 const valueHtml = ref('<p>hello</p>')
 
@@ -38,7 +44,7 @@ onMounted(() => {
 })
 
 const toolbarConfig = {}
-const editorConfig = { placeholder: '请输入内容...',MENU_CONF: {} }
+const editorConfig = { placeholder: '请输入内容...',MENU_CONF: {} as any}
 
 
 editorConfig.MENU_CONF['uploadImage'] = {
@@ -46,9 +52,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
       // server: '/api/upload-img-10s', // test timeout
       // server: '/api/upload-img-failed', // test failed
       // server: '/api/xxx', // test 404
-
       timeout: 5 * 1000, // 5s
-
       fieldName: 'custom-fileName',
       meta: { token: 'xxx', a: 100 },
       metaWithUrl: true, // join params to url
@@ -83,9 +87,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
     }
 
 
-    editorConfig.MENU_CONF['uploadImage'] = {
-     server: 'localhost:8081/api/upload',
-}
+   
 
 
 
