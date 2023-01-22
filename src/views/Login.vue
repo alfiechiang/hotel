@@ -6,17 +6,50 @@
             </div>
             <div class="item" style="margin-top:40px">
                 <span>帳號：</span>
-                <el-input size="large"  placeholder="請輸入帳號" />
+                <el-input size="large" v-model="loginData.user_name"  placeholder="請輸入帳號" />
             </div>
             <div class="item">
                 <span>密碼：</span>
-                <el-input size="large" type="password" show-password placeholder="請輸入密碼" />
+                <el-input size="large" v-model="loginData.password"  type="password" show-password placeholder="請輸入密碼" />
             </div>
-                <el-button  round type="primary" class="login-button" size="large">登入</el-button>
+                <el-button  round type="primary" class="login-button" size="large" @click="handleLogin">登入</el-button>
         </div>
     </div>
 </template>
 <script setup lang="ts">
+import { reactive, toRefs, ref } from 'vue'
+import { useRouter } from "vue-router";
+
+
+import request from '@/utils/request';
+
+export interface LoginData {
+   user_name: string | undefined;
+   password: string | undefined;
+  
+}
+const router = useRouter();
+const state = reactive({
+    loginData: {} as LoginData,
+})
+const {
+    loginData,
+} = toRefs(state);
+
+
+
+const handleLogin = () => {
+   request({
+      url: '/admin/login',
+      method: 'post',
+      data: loginData.value
+   }).then((res) => {
+     let access_token =res.data.access_token
+     router.push({ path: '/'});
+   })
+
+
+}
 
 </script>
 <style lang="scss">
