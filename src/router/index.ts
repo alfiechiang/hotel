@@ -30,6 +30,11 @@ const router = createRouter({
           name: 'upload',
           component: () => import('../views/upload/index.vue')
         },
+        {
+          path: 'roomtype',
+          name: 'roomtype',
+          component: () => import('../views/room_type/index.vue')
+        },
       ]
     }
   ]
