@@ -2,7 +2,7 @@
     <div class="container">
         <div class="left" :style="{background:themeColor}">
 
-            <el-menu default-active="2" class="el-menu-vertical-demo" :background-color="themeColor" text-color="white">
+            <el-menu default-active="2" class="el-menu-vertical-demo" :background-color="themeColor" text-color="white" router>
                 <el-sub-menu index="1">
                     <template #title>
                         <el-icon><Avatar /></el-icon>
@@ -13,12 +13,19 @@
                         <template #title>個人中心</template>
                     </el-menu-item>
                 </el-sub-menu>
-                <el-menu-item index="3" disabled>
-                    <el-icon>
-                        <document />
-                    </el-icon>
-                    <template #title>客房管理</template>
-                </el-menu-item>
+
+                <el-sub-menu index="1">
+                    <template #title>
+                        <el-icon>
+                            <document />
+                        </el-icon>                        
+                        <span>客房管理</span>
+                    </template>
+                    <el-menu-item index="/roomtype">
+                        <el-icon><User /></el-icon>
+                        <template #title>類型管理</template>
+                    </el-menu-item>
+                </el-sub-menu>
             </el-menu>
 
         </div>
