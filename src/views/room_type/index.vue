@@ -6,10 +6,10 @@
         <el-button color="#626aef" @click="createDialogVisible = true">新增房型</el-button>
 
         <div class="content">
-            <el-table ref="dataTableRef" :data="List" style="width:100%">
+            <el-table ref="dataTableRef" :data="List" :cell-style="{width: '100%', height: '50px'}">
                 <el-table-column prop="typeID" label="房型編號" width="120" />
 
-                <el-table-column prop="name" label="房間名稱" width="120" />
+                <el-table-column prop="name" label="房間名稱" width="120"/>
                 <el-table-column prop="price" label="價格" width="120" />
                 <el-table-column prop="bed_num" label="床位數" width="600" />
                 <el-table-column fixed="right" label="Operations" width="120">
@@ -211,7 +211,7 @@ const editDialogVisible =ref(false)
 <style lang="scss">
 .box {
     width: 100%;
-    height: 600px;
+    height: 670px;
     padding: 20px;
     background: white;
 }
