@@ -6,15 +6,16 @@
         <el-button color="#626aef" @click="createDialogVisible = true">新增房型</el-button>
 
         <div class="content">
-            <el-table ref="dataTableRef" :data="List" :cell-style="{width: '100%', height: '50px'}">
+            <el-table ref="dataTableRef" :data="List" :cell-style="{ width: '100%', height: '50px' }">
                 <el-table-column prop="typeID" label="房型編號" width="120" />
 
-                <el-table-column prop="name" label="房間名稱" width="120"/>
+                <el-table-column prop="name" label="房間名稱" width="120" />
                 <el-table-column prop="price" label="價格" width="120" />
                 <el-table-column prop="bed_num" label="床位數" width="600" />
                 <el-table-column fixed="right" label="Operations" width="120">
                     <template #default="scope">
                         <el-button link type="primary" size="small" @click="onEdit(scope.row)">編輯</el-button>
+                        <el-button type="primary" size="small" @click="handleImgDialog(scope.row)">照片</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -81,6 +82,25 @@
             </el-form>
         </el-dialog>
 
+        <el-dialog v-model="imgdialogVisible" title="照片牆" width="60%">
+            <el-upload v-model:file-list="fileList" name="image" action="http://localhost:3000/admin/upload"
+                list-type="picture-card" :on-success="uploadImg" :on-preview="handlePictureCardPreview"
+                :on-remove="handleRemove">
+                <el-icon>
+                    <Plus />
+                </el-icon>
+            </el-upload>
+
+            <el-dialog v-model="dialogVisible">
+                <img w-full :src="dialogImageUrl" alt="Preview Image" />
+            </el-dialog> <template #footer>
+                <span class="dialog-footer">
+                    <el-button type="primary" @click="imgdialogVisible = false">
+                        確定
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
 
 
     </div>
@@ -93,6 +113,10 @@
 import request from '@/utils/request';
 import { reactive, toRefs, onBeforeMount, ref } from 'vue';
 import { ElMessage } from 'element-plus'
+import { Plus } from '@element-plus/icons-vue'
+import type { UploadProps, UploadUserFile } from 'element-plus'
+
+
 
 export interface RommTypeSearch {
     page: number | undefined;
@@ -129,7 +153,7 @@ const handleCurrentChange = (val: number) => {
 
 const onCancel = () => {
     createDialogVisible.value = false
-    editDialogVisible.value =false
+    editDialogVisible.value = false
     form.value = {} as RommTypeForm
 }
 
@@ -155,17 +179,17 @@ const onEdit = async (row: any) => {
     await request({
         url: '/admin/' + row.typeID + '/roomtype',
         method: 'get',
-    }).then((res:any) => {
-        form.value =res.data
-        
+    }).then((res: any) => {
+        form.value = res.data
+
     })
-    editDialogVisible.value =true
+    editDialogVisible.value = true
 }
 
 
-const onUpdate = async() =>{
+const onUpdate = async () => {
     await request({
-        url: '/admin/roomtype/'+form.value.typeID,
+        url: '/admin/roomtype/' + form.value.typeID,
         method: "put",
         data: form.value
     }).then((res: any) => {
@@ -175,14 +199,10 @@ const onUpdate = async() =>{
         }
 
         roomTypeList()
-        editDialogVisible.value =false
+        editDialogVisible.value = false
         form.value = {} as RommTypeForm
     })
 }
-
-
-
-
 
 const roomTypeList = async () => {
 
@@ -205,7 +225,39 @@ onBeforeMount(() => {
 })
 
 const createDialogVisible = ref(false)
-const editDialogVisible =ref(false)
+const editDialogVisible = ref(false)
+
+//圖片上傳
+const fileList = ref<UploadUserFile[]>([
+    {
+        name: 'food.jpeg',
+        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+    },
+
+])
+
+const imgdialogVisible = ref(false)
+const dialogImageUrl = ref('')
+const dialogVisible = ref(false)
+const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+    console.log(uploadFile, uploadFiles)
+}
+
+const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
+    dialogImageUrl.value = uploadFile.url!
+    dialogVisible.value = true
+}
+
+const handleImgDialog = (row: any) => {
+    typeID =row.typeID
+    imgdialogVisible.value = true
+}
+
+let typeID =0
+const uploadImg = (res: any) => {
+
+    console.log(res);
+}
 
 </script>
 <style lang="scss">
