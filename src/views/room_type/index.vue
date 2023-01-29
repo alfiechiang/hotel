@@ -236,6 +236,8 @@ const fileList = ref<UploadUserFile[]>([
 
 ])
 
+
+
 const imgdialogVisible = ref(false)
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
@@ -254,9 +256,18 @@ const handleImgDialog = (row: any) => {
 }
 
 let typeID =0
-const uploadImg = (res: any) => {
+const uploadImg = async(res: any) => {
 
-    console.log(res);
+    let imgUrl =res.data.image_url
+    await request({
+        url: '/admin/upload/roomtype_img',
+        method: 'post',
+        data: {img_url:imgUrl,typeID:typeID}
+    }).then((res:any) => {
+        if (res.code == 200) {
+            ElMessage({ message: '新增成功', type: 'success' })
+        }
+    })
 }
 
 </script>
