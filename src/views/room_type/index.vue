@@ -228,15 +228,7 @@ const createDialogVisible = ref(false)
 const editDialogVisible = ref(false)
 
 //圖片上傳
-const fileList = ref<UploadUserFile[]>([
-    {
-        name: 'food.jpeg',
-        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-    },
-
-])
-
-
+const fileList = ref<UploadUserFile[]>([])
 
 const imgdialogVisible = ref(false)
 const dialogImageUrl = ref('')
@@ -250,19 +242,37 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
     dialogVisible.value = true
 }
 
-const handleImgDialog = (row: any) => {
+const handleImgDialog = async(row: any) => {
     typeID =row.typeID
+    fileList.value =[]
+
+    await request({
+        url:"/admin/roomtype/img",
+        method:"get",
+        params:{typeID:row.typeID}
+    }).then((res:any)=>{
+        res.data.forEach((item:any)=>{
+            fileList.value.push({
+                name:item.img_name,
+                url:"http://"+item.img_url
+            })
+        })
+        console.log(fileList.value)
+    })
+
     imgdialogVisible.value = true
 }
 
 let typeID =0
 const uploadImg = async(res: any) => {
 
-    let imgUrl =res.data.image_url
+    let imgUrl =res.data.img_url
+    let imgName=res.data.img_name
+
     await request({
         url: '/admin/upload/roomtype_img',
         method: 'post',
-        data: {img_url:imgUrl,typeID:typeID}
+        data: {img_url:imgUrl,typeID:typeID,img_name:imgName}
     }).then((res:any) => {
         if (res.code == 200) {
             ElMessage({ message: '新增成功', type: 'success' })
